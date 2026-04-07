@@ -25,19 +25,31 @@ export default function PhotoUpload({
       return;
     }
 
-    if (file.size > 2 * 1024 * 1024) {
-      setError(
-        "Afbeelding is groter dan 2MB. Dit kan problemen geven in sommige e-mailclients."
-      );
-    }
-
     setFileName(file.name);
     setFileSize(file.size);
 
     const reader = new FileReader();
     reader.onload = (e) => {
-      const result = e.target?.result as string;
-      onPhotoChange(result);
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const size = 160; // 2x retina van 80px display size
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext("2d")!;
+        // Circulaire crop
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+        ctx.clip();
+        // Centreer en schaal de afbeelding
+        const scale = Math.max(size / img.width, size / img.height);
+        const x = (size - img.width * scale) / 2;
+        const y = (size - img.height * scale) / 2;
+        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        const compressed = canvas.toDataURL("image/jpeg", 0.8);
+        onPhotoChange(compressed);
+      };
+      img.src = e.target?.result as string;
     };
     reader.readAsDataURL(file);
   }

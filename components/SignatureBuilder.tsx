@@ -6,7 +6,8 @@ import SignaturePreview from "./SignaturePreview";
 import CopyButton from "./CopyButton";
 import GmailInstructions from "./GmailInstructions";
 import { generateSignatureHTML } from "@/lib/generateSignatureHTML";
-import { LOGO_BASE64 } from "@/lib/logoBase64";
+
+const LOGO_URL = "https://signature-generator-lac-nine.vercel.app/logo.png";
 
 export default function SignatureBuilder() {
   const [name, setName] = useState("");
@@ -21,7 +22,7 @@ export default function SignatureBuilder() {
       phone,
       website,
       photoBase64,
-      logoBase64: LOGO_BASE64,
+      logoUrl: LOGO_URL,
     });
   }, [name, phone, website, photoBase64]);
 
