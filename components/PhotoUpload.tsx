@@ -37,6 +37,9 @@ export default function PhotoUpload({
         canvas.width = size;
         canvas.height = size;
         const ctx = canvas.getContext("2d")!;
+        // Witte achtergrond zodat er geen zwart verschijnt bij copy-paste
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, size, size);
         // Circulaire crop
         ctx.beginPath();
         ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
