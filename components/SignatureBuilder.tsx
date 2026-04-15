@@ -9,6 +9,19 @@ import { generateSignatureHTML } from "@/lib/generateSignatureHTML";
 
 const LOGO_URL = "https://signature-generator-lac-nine.vercel.app/logo.png";
 
+function formatBelgianPhone(input: string): string {
+  const digits = input.replace(/\D/g, "").replace(/^0+/, "");
+  // Strip leading 32 country code if present
+  const local = digits.startsWith("32") ? digits.slice(2) : digits;
+  // Belgian mobile numbers have 9 digits after country code
+  const d = local.slice(0, 9);
+  if (d.length === 0) return "";
+  if (d.length <= 3) return `+32 ${d}`;
+  if (d.length <= 5) return `+32 ${d.slice(0, 3)} ${d.slice(3)}`;
+  if (d.length <= 7) return `+32 ${d.slice(0, 3)} ${d.slice(3, 5)} ${d.slice(5)}`;
+  return `+32 ${d.slice(0, 3)} ${d.slice(3, 5)} ${d.slice(5, 7)} ${d.slice(7)}`;
+}
+
 export default function SignatureBuilder() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -82,7 +95,7 @@ export default function SignatureBuilder() {
             <input
               type="tel"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => setPhone(formatBelgianPhone(e.target.value))}
               placeholder="+32 479 38 14 12"
               className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition"
             />
