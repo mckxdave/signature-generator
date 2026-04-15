@@ -18,7 +18,7 @@ export function generateSignatureHTML(data: SignatureData): string {
     </td>
     <td style="width: 1px; background-color: #E0E0E0; padding: 0;">&nbsp;</td>
     <td style="padding-left: 16px; vertical-align: top; padding-top: 4px;">
-      <p style="margin: 0 0 2px 0; font-size: 15px; font-weight: 700; color: #1A1A1A; line-height: 1.3;">${name.toUpperCase()}</p>
+      <p style="margin: 0 0 2px 0; font-size: 15px; font-weight: 700; color: #F8BF31; line-height: 1.3;">${name.toUpperCase()}</p>
       <p style="margin: 0 0 2px 0; font-size: 13px; color: #555555; line-height: 1.4;">${phone}</p>
       <p style="margin: 0 0 12px 0; font-size: 13px; color: #555555; line-height: 1.4;">${website}</p>
       <img src="${logoUrl}" width="160" alt="Pro Active" style="display: block; width: 160px;" />
