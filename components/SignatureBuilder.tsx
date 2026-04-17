@@ -6,8 +6,11 @@ import SignaturePreview from "./SignaturePreview";
 import CopyButton from "./CopyButton";
 import GmailInstructions from "./GmailInstructions";
 import { generateSignatureHTML } from "@/lib/generateSignatureHTML";
+import { generateSignatureHTMLv2 } from "@/lib/generateSignatureHTMLv2";
 
 const LOGO_URL = "https://signature-generator-lac-nine.vercel.app/logo.png";
+
+type Version = "v1" | "v2";
 
 function formatBelgianPhone(input: string): string {
   const digits = input.replace(/\D/g, "").replace(/^0+/, "");
@@ -23,21 +26,35 @@ function formatBelgianPhone(input: string): string {
 }
 
 export default function SignatureBuilder() {
+  const [version, setVersion] = useState<Version>("v2");
   const [name, setName] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [website, setWebsite] = useState("www.pro-active.be");
   const [photoBase64, setPhotoBase64] = useState("");
 
   const signatureHTML = useMemo(() => {
     if (!name || !photoBase64) return "";
-    return generateSignatureHTML({
+    if (version === "v1") {
+      return generateSignatureHTML({
+        name,
+        phone,
+        website,
+        photoBase64,
+        logoUrl: LOGO_URL,
+      });
+    }
+    return generateSignatureHTMLv2({
       name,
+      jobTitle,
+      email,
       phone,
       website,
       photoBase64,
       logoUrl: LOGO_URL,
     });
-  }, [name, phone, website, photoBase64]);
+  }, [version, name, jobTitle, email, phone, website, photoBase64]);
 
   const isComplete = Boolean(name && photoBase64);
 
@@ -67,6 +84,32 @@ export default function SignatureBuilder() {
         </p>
       </header>
 
+      {/* Version Tabs */}
+      <div className="flex justify-center mb-6">
+        <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm">
+          <button
+            onClick={() => setVersion("v1")}
+            className={`px-5 py-2 rounded-md text-sm font-semibold transition-all ${
+              version === "v1"
+                ? "bg-brand-yellow text-brand-black shadow-sm"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            V1 — Klassiek
+          </button>
+          <button
+            onClick={() => setVersion("v2")}
+            className={`px-5 py-2 rounded-md text-sm font-semibold transition-all ${
+              version === "v2"
+                ? "bg-brand-yellow text-brand-black shadow-sm"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            V2 — Brand Guide
+          </button>
+        </div>
+      </div>
+
       {/* Main layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left: Form */}
@@ -86,6 +129,38 @@ export default function SignatureBuilder() {
               className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition"
             />
           </div>
+
+          {/* Job Title — V2 only */}
+          {version === "v2" && (
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                Functietitel
+              </label>
+              <input
+                type="text"
+                value={jobTitle}
+                onChange={(e) => setJobTitle(e.target.value)}
+                placeholder="Performance Marketeer"
+                className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition"
+              />
+            </div>
+          )}
+
+          {/* Email — V2 only */}
+          {version === "v2" && (
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                E-mailadres
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="davy@pro-active.be"
+                className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition"
+              />
+            </div>
+          )}
 
           {/* Phone */}
           <div>
