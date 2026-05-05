@@ -7,10 +7,17 @@ export interface SignatureDataV2 {
   photoBase64: string;
 }
 
+const ICON_BASE = "https://signature-generator-lac-nine.vercel.app/icons";
+
 export function generateSignatureHTMLv2(data: SignatureDataV2): string {
   const { name, jobTitle, email, phone, website, photoBase64 } = data;
 
   const titleLine = jobTitle ? `${jobTitle} · Pro Active` : "Pro Active";
+
+  const iconStyle = `display:inline-block;vertical-align:middle;`;
+  const emailIcon = `<img src="${ICON_BASE}/email.png" width="14" height="14" alt="" style="${iconStyle}" />`;
+  const phoneIcon = `<img src="${ICON_BASE}/phone.png" width="14" height="14" alt="" style="${iconStyle}" />`;
+  const webIcon = `<img src="${ICON_BASE}/web.png" width="14" height="14" alt="" style="${iconStyle}" />`;
 
   return `<table cellpadding="0" cellspacing="0" border="0" style="font-family: Lato, Arial, Helvetica, sans-serif; color: #0A0A0A; border-collapse: collapse;">
   <tr>
@@ -45,17 +52,17 @@ export function generateSignatureHTMLv2(data: SignatureDataV2): string {
             <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
               ${email ? `<tr>
                 <td style="padding-bottom: 3px; font-size: 11px; font-weight: 400; color: #555555; line-height: 1.4;">
-                  <a href="mailto:${email}" style="color: #555555; text-decoration: none;">${email}</a>
+                  ${emailIcon}&nbsp;&nbsp;<a href="mailto:${email}" style="color: #555555; text-decoration: none;">${email}</a>
                 </td>
               </tr>` : ""}
               ${phone ? `<tr>
                 <td style="padding-bottom: 3px; font-size: 11px; font-weight: 400; color: #555555; line-height: 1.4;">
-                  <a href="tel:${phone.replace(/\s/g, "")}" style="color: #555555; text-decoration: none;">${phone}</a>
+                  ${phoneIcon}&nbsp;&nbsp;<a href="tel:${phone.replace(/\s/g, "")}" style="color: #555555; text-decoration: none;">${phone}</a>
                 </td>
               </tr>` : ""}
               ${website ? `<tr>
                 <td style="padding-bottom: 0; font-size: 11px; font-weight: 400; color: #555555; line-height: 1.4;">
-                  <a href="https://${website}" style="color: #555555; text-decoration: none;">${website}</a>
+                  ${webIcon}&nbsp;&nbsp;<a href="https://${website}" style="color: #555555; text-decoration: none;">${website}</a>
                 </td>
               </tr>` : ""}
             </table>
