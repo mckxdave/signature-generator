@@ -23,7 +23,7 @@ export function generateSignatureHTMLv2(data: SignatureDataV2): string {
     <td style="padding-right: 16px; vertical-align: top;">
       <img src="${photoBase64}"
            width="72" height="72"
-           style="border-radius: 50%; object-fit: cover; display: block; width: 72px; height: 72px; border: 2px solid #F8BD30;" />
+           style="border-radius: 50%; object-fit: cover; display: block; width: 72px; height: 72px;" />
     </td>
     <td style="vertical-align: top; padding-top: 0;">
       <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">

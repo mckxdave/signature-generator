@@ -44,10 +44,10 @@ export default function PhotoUpload({
         ctx.beginPath();
         ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
         ctx.clip();
-        // Centreer en schaal de afbeelding
+        // Schaal de afbeelding en knip vanaf onderaan af zodat het hoofd behouden blijft
         const scale = Math.max(size / img.width, size / img.height);
         const x = (size - img.width * scale) / 2;
-        const y = (size - img.height * scale) / 2;
+        const y = 0;
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
         const compressed = canvas.toDataURL("image/jpeg", 0.8);
         onPhotoChange(compressed);
