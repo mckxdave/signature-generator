@@ -52,7 +52,6 @@ export default function SignatureBuilder() {
       phone,
       website,
       photoBase64,
-      logoUrl: LOGO_URL,
     });
   }, [version, name, jobTitle, email, phone, website, photoBase64]);
 

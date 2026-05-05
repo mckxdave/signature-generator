@@ -5,11 +5,10 @@ export interface SignatureDataV2 {
   phone: string;
   website: string;
   photoBase64: string;
-  logoUrl: string;
 }
 
 export function generateSignatureHTMLv2(data: SignatureDataV2): string {
-  const { name, jobTitle, email, phone, website, photoBase64, logoUrl } = data;
+  const { name, jobTitle, email, phone, website, photoBase64 } = data;
 
   // Icon color #888888, 14px size, inline as data URIs for email compatibility
   const emailIcon = `<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'/%3E%3Cpath d='m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7'/%3E%3C/svg%3E" width="14" height="14" style="display:inline-block;vertical-align:middle;" />`;
@@ -20,12 +19,12 @@ export function generateSignatureHTMLv2(data: SignatureDataV2): string {
 
   return `<table cellpadding="0" cellspacing="0" border="0" style="font-family: Lato, Arial, Helvetica, sans-serif; color: #0A0A0A; border-collapse: collapse;">
   <tr>
-    <td style="padding-right: 16px; vertical-align: top;">
+    <td style="padding-right: 16px; vertical-align: middle;">
       <img src="${photoBase64}"
-           width="72" height="72"
-           style="border-radius: 50%; object-fit: cover; display: block; width: 72px; height: 72px;" />
+           width="96" height="96"
+           style="border-radius: 50%; object-fit: cover; display: block; width: 96px; height: 96px;" />
     </td>
-    <td style="vertical-align: top; padding-top: 0;">
+    <td style="vertical-align: middle; padding-top: 0;">
       <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
         <tr>
           <td style="padding-bottom: 1px;">
@@ -64,9 +63,6 @@ export function generateSignatureHTMLv2(data: SignatureDataV2): string {
           </td>
         </tr>
       </table>
-    </td>
-    <td style="vertical-align: bottom; padding-left: 24px;">
-      <img src="${logoUrl}" width="140" alt="Pro Active" style="display: block; width: 140px;" />
     </td>
   </tr>
 </table>`;
