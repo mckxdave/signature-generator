@@ -39,12 +39,8 @@ export function generateSignatureHTMLv2(data: SignatureDataV2): string {
           </td>
         </tr>
         <tr>
-          <td style="padding-bottom: 8px; line-height: 0; font-size: 0;">
-            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
-              <tr>
-                <td style="width: 28px; height: 2px; line-height: 2px; font-size: 0; background-color: #F8BD30;">&nbsp;</td>
-              </tr>
-            </table>
+          <td style="padding-bottom: 8px;">
+            <img src="${ICON_BASE}/accent.png" width="28" height="2" alt="" style="display: block; width: 28px; height: 2px;" />
           </td>
         </tr>
         <tr>
