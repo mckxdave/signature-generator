@@ -37,10 +37,7 @@ export default function PhotoUpload({
         canvas.width = size;
         canvas.height = size;
         const ctx = canvas.getContext("2d")!;
-        // Witte achtergrond zodat er geen zwart verschijnt bij copy-paste
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, size, size);
-        // Circulaire crop
+        // Circulaire clip met transparante achtergrond buiten de cirkel
         ctx.beginPath();
         ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
         ctx.clip();
@@ -49,7 +46,7 @@ export default function PhotoUpload({
         const x = (size - img.width * scale) / 2;
         const y = 0;
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-        const compressed = canvas.toDataURL("image/jpeg", 0.8);
+        const compressed = canvas.toDataURL("image/png");
         onPhotoChange(compressed);
       };
       img.src = e.target?.result as string;
